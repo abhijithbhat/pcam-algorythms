@@ -1,4 +1,4 @@
-# algoRhythmss: Dual-Objective PCAM Precision Engine
+# AlgoRythms: Dual-Objective PCAM Precision Engine
 **Team:** algoRhythmss (Thejas J, Raghavendra, Abhijith, Dhul Kif)
 
 ## 1. Architecture Overview
