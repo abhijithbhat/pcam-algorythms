@@ -1,0 +1,117 @@
+{
+  "config": {
+    "K": 16,
+    "N": 64,
+    "noise_levels": [
+      0.5,
+      0.7,
+      0.8
+    ],
+    "n_per_level": 250,
+    "n_aniso": 16,
+    "seeds": [
+      7,
+      13,
+      31,
+      97,
+      211,
+      503,
+      1009
+    ]
+  },
+  "per_seed": [
+    {
+      "seed": 7,
+      "agent_accuracy": 0.7933333333333333,
+      "baseline_accuracy": 0.752,
+      "delta": 0.04133333333333333,
+      "spread_baseline": 12.2118,
+      "spread_agent": 11.9411,
+      "spread_reduction": 1.0227,
+      "duration_s": 32.15
+    },
+    {
+      "seed": 13,
+      "agent_accuracy": 0.9093333333333333,
+      "baseline_accuracy": 0.8693333333333333,
+      "delta": 0.040000000000000036,
+      "spread_baseline": 12.1063,
+      "spread_agent": 11.7535,
+      "spread_reduction": 1.03,
+      "duration_s": 27.81
+    },
+    {
+      "seed": 31,
+      "agent_accuracy": 0.828,
+      "baseline_accuracy": 0.7693333333333333,
+      "delta": 0.058666666666666645,
+      "spread_baseline": 12.2617,
+      "spread_agent": 12.003,
+      "spread_reduction": 1.0216,
+      "duration_s": 33.14
+    },
+    {
+      "seed": 97,
+      "agent_accuracy": 0.8813333333333333,
+      "baseline_accuracy": 0.8293333333333334,
+      "delta": 0.051999999999999935,
+      "spread_baseline": 12.5555,
+      "spread_agent": 12.1231,
+      "spread_reduction": 1.0357,
+      "duration_s": 28.26
+    },
+    {
+      "seed": 211,
+      "agent_accuracy": 0.932,
+      "baseline_accuracy": 0.8613333333333333,
+      "delta": 0.07066666666666677,
+      "spread_baseline": 12.4421,
+      "spread_agent": 12.1519,
+      "spread_reduction": 1.0239,
+      "duration_s": 29.2
+    },
+    {
+      "seed": 503,
+      "agent_accuracy": 0.9173333333333333,
+      "baseline_accuracy": 0.8706666666666667,
+      "delta": 0.046666666666666634,
+      "spread_baseline": 12.3034,
+      "spread_agent": 12.0585,
+      "spread_reduction": 1.0203,
+      "duration_s": 28.62
+    },
+    {
+      "seed": 1009,
+      "agent_accuracy": 0.8853333333333333,
+      "baseline_accuracy": 0.82,
+      "delta": 0.06533333333333335,
+      "spread_baseline": 12.4859,
+      "spread_agent": 12.1485,
+      "spread_reduction": 1.0278,
+      "duration_s": 31.15
+    }
+  ],
+  "aggregated": {
+    "mean_delta": 0.05352380952380953,
+    "min_delta": 0.040000000000000036,
+    "mean_spread": 1.026,
+    "min_spread": 1.0203,
+    "seeds": [
+      7,
+      13,
+      31,
+      97,
+      211,
+      503,
+      1009
+    ],
+    "n_seeds": 7
+  },
+  "score": {
+    "retrieval_pts": 70.0,
+    "anisotropy_pts": 0.22,
+    "code_quality_pts": "(manual, up to 10)",
+    "total_automated": 70.22,
+    "max_automated": 90.0
+  }
+}
