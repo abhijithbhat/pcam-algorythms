@@ -4,11 +4,6 @@ from adapter import Adapter
 
 _PI_LO, _PI_HI = 0.1, 10.0
 _EPS = 1e-12
-
-_SOFTMAX_TEMP = 5.0
-_SIGMOID_CENTRE = 0.85
-_SIGMOID_STEEPNESS = 40.0
-_PURE_ISO_COS = 0.89
 _SMOOTH_FLOOR = 0.05
 
 _LOG_ITERS = 20
@@ -155,21 +150,36 @@ class Engine(Adapter):
         best_k = int(np.argmax(cos_sim))
         max_cos = cos_sim[best_k]
 
-        logits = _SOFTMAX_TEMP * cos_sim
+        # 1. Scale-Invariant Attention (adapts to any dimension)
+        logits = np.sqrt(self.D) * cos_sim
         logits -= logits.max()
         w = np.exp(logits)
         w = w / (w.sum() + _EPS)
+        
         mu = w @ self.X
         local_var = w @ ((self.X - mu) ** 2)
         noise_sq = (q - mu) ** 2
         pi_ret = (local_var + _SMOOTH_FLOOR) / (noise_sq + _SMOOTH_FLOOR)
 
+        # 2. Dynamic Statistical Gating (adapts to L3 PCA-MNIST)
+        mean_cos = cos_sim.mean()
+        std_cos = cos_sim.std() + _EPS
+        
+        dynamic_centre = mean_cos + 2.5 * std_cos
+        dynamic_pure = mean_cos + 3.0 * std_cos
+        dynamic_steepness = 5.0 / std_cos
+
         pi_iso = self._iso_pis[best_k]
-        if max_cos >= _PURE_ISO_COS:
+        
+        # Pure ISO fallback
+        if max_cos >= dynamic_pure:
             return pi_iso.copy()
 
-        t = 1.0 / (1.0 + np.exp(-_SIGMOID_STEEPNESS * (max_cos - _SIGMOID_CENTRE)))
+        # 3. Geometric Blend
+        t = 1.0 / (1.0 + np.exp(-dynamic_steepness * (max_cos - dynamic_centre)))
         pi = np.exp(t * np.log(pi_iso + _EPS) + (1.0 - t) * np.log(pi_ret + _EPS))
+        
+        # 4. Rigorous Constraint Projection
         pi = pi / (pi.mean() + _EPS)
         for _ in range(20):
             pi = np.clip(pi, self.pi_min, self.pi_max)
@@ -177,4 +187,5 @@ class Engine(Adapter):
             if abs(mean - 1.0) < 1e-10:
                 break
             pi = pi / (mean + _EPS)
+            
         return np.clip(pi, self.pi_min, self.pi_max)
